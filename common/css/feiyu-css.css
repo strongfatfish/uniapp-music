@@ -191,6 +191,13 @@
 	color: #969696;
 }
 
+/* 文字隐藏... */
+.font-hidden {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 /* 遮罩颜色 */
 .bg-color-mask {
 	background-color: rgba(0, 0, 0, 0.4);
@@ -207,4 +214,5 @@
 	width: 100%;
 	z-index: 991;
 }
+
 

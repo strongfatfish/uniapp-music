@@ -26,9 +26,9 @@
 					<block v-if="type === 0">
 						<swiper-item v-for="(newSongs, index) in newSongList" :key="index">
 							<block v-for="(newSong, i) in newSongs" :key="i">
-								<view class="flex-row  row-center padding-top-16 padding-left-20">
+								<view class="flex-row  row-center padding-top-16 padding-left-20 ">
 									<image style="width: 100rpx;height: 100rpx; border-radius: 20rpx;" :src="newSong.album.blurPicUrl" mode="aspectFill"></image>
-									<view class=" flex-1 padding-left-30">
+									<view class=" flex-1 padding-left-30 font-hidden" >
 										<view class="font-size-30 font-weight-400">{{ newSong.name }}</view>
 										<view class="font-size-26 font-weight-200">{{ newSong.artists[0].name }}</view>
 									</view>
@@ -39,9 +39,9 @@
 					<block v-else>
 						<swiper-item v-for="(newAlbums, index) in newAlbumList" :key="index">
 							<block v-for="(newAlbum, i) in newAlbums" :key="i">
-								<view class="flex-row  row-center padding-top-16 padding-left-20">
+								<view class="flex-row  row-center padding-top-16 padding-left-20 ">
 									<image style="width: 100rpx;height: 100rpx; border-radius: 20rpx;" :src="newAlbum.blurPicUrl" mode="aspectFill"></image>
-									<view class=" flex-1 padding-left-30">
+									<view class=" flex-1 padding-left-30 ">
 										<view class="font-size-26 font-weight-400">{{ newAlbum.name }}</view>
 										<view class="font-size-26 font-weight-200">{{ newAlbum.artists[0].name }}</view>
 									</view>
@@ -91,10 +91,12 @@ export default {
 	},
 	created() {
 		this.getData();
+		
 	},
 	methods: {
 		select(id) {
 			this.type = id;
+			console.log(this.$store.state.name);
 		},
 		getData() {
 			get_newsong({}, res => {
@@ -124,7 +126,7 @@ export default {
 	height: 600rpx;
 	&swiper-item {
 		height: 100rpx;
-		width: 550rpx;
+		width: 500rpx;
 	}
 }
 </style>
