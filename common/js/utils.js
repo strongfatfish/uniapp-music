@@ -73,5 +73,6 @@ const post = (url, params) => {
 export {
 	info,
 	get,
-	post
+	post,
+	toast
 }

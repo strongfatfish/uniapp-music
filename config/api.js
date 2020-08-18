@@ -95,7 +95,7 @@ const get_lyric = (id, cb) => {
 	get(url, params).then(data => cb(data.data))
 }
 
-// 歌手详情
+// 歌曲详情
 const get_song_detail = (id, cb) => {
 	let url = config.API.SONG_DETAIL;
 	let params = {

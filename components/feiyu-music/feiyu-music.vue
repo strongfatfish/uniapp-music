@@ -25,12 +25,12 @@
 				<swiper next-margin="60rpx" class="swiper" circular disable-programmatic-animation>
 					<block v-if="type === 0">
 						<swiper-item v-for="(newSongs, index) in newSongList" :key="index">
-							<block v-for="(newSong, i) in newSongs" :key="i">
-								<view class="flex-row  row-center padding-top-16 padding-left-20 ">
-									<image style="width: 100rpx;height: 100rpx; border-radius: 20rpx;" :src="newSong.album.blurPicUrl" mode="aspectFill"></image>
+							<block v-for="(item, i) in newSongs" :key="i">
+								<view class="flex-row  row-center padding-top-16 padding-left-20 " @click="playId(item)">
+									<image style="width: 100rpx;height: 100rpx; border-radius: 20rpx;" :src="item.album.blurPicUrl" mode="aspectFill"></image>
 									<view class=" flex-1 padding-left-30 font-hidden" >
-										<view class="font-size-30 font-weight-400">{{ newSong.name }}</view>
-										<view class="font-size-26 font-weight-200">{{ newSong.artists[0].name }}</view>
+										<view class="font-size-30 font-weight-400">{{ item.name }}</view>
+										<view class="font-size-26 font-weight-200">{{ item.artists[0].name }}</view>
 									</view>
 								</view>
 							</block>
@@ -38,12 +38,12 @@
 					</block>
 					<block v-else>
 						<swiper-item v-for="(newAlbums, index) in newAlbumList" :key="index">
-							<block v-for="(newAlbum, i) in newAlbums" :key="i">
-								<view class="flex-row  row-center padding-top-16 padding-left-20 ">
-									<image style="width: 100rpx;height: 100rpx; border-radius: 20rpx;" :src="newAlbum.blurPicUrl" mode="aspectFill"></image>
+							<block v-for="(item, i) in newAlbums" :key="i">
+								<view class="flex-row  row-center padding-top-16 padding-left-20 " @click="playId(item)">
+									<image style="width: 100rpx;height: 100rpx; border-radius: 20rpx;" :src="item.blurPicUrl" mode="aspectFill"></image>
 									<view class=" flex-1 padding-left-30 ">
-										<view class="font-size-26 font-weight-400">{{ newAlbum.name }}</view>
-										<view class="font-size-26 font-weight-200">{{ newAlbum.artists[0].name }}</view>
+										<view class="font-size-26 font-weight-400">{{ item.name }}</view>
+										<view class="font-size-26 font-weight-200">{{ item.artists[0].name }}</view>
 									</view>
 								</view>
 							</block>
@@ -56,7 +56,8 @@
 </template>
 
 <script>
-import { get_newsong, get_newalbum } from '../../config/api.js';
+import { get_newsong, get_newalbum,get_song_url,album_detail,get_song_detail } from '../../config/api.js';
+import play from "../../common/js/play.js"
 export default {
 	data() {
 		return {
@@ -96,7 +97,6 @@ export default {
 	methods: {
 		select(id) {
 			this.type = id;
-			console.log(this.$store.state.name);
 		},
 		getData() {
 			get_newsong({}, res => {
@@ -111,6 +111,19 @@ export default {
 					this.newAlbumList.push(data.slice(i, i + 5));
 				}
 			});
+		},
+		playId(item) {
+			let id = item.id;
+			if (this.type === 1) {
+				album_detail(item.id,res => {
+					play.start(res.songs[0].id,data => {
+						this.$store.commit("SET_PLAYED",data)
+					})
+				})
+			}
+			play.start(id,data => {
+				this.$store.commit("SET_PLAYED",data)
+			})
 		}
 	}
 };

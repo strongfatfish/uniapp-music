@@ -13,6 +13,7 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		<feiyu-play></feiyu-play>
 	</view>
 </template>
 
